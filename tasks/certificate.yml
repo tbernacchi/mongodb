@@ -1,0 +1,14 @@
+- name: Create and copying openssl script certificate.sh
+  copy:
+    content: "#!/bin/bash \n
+openssl rand -base64 741 > /tmp/mongodb.key \n
+chmod 600 /tmp/mongodb.key \n
+chown mongod:mongod /tmp/mongodb.key \n" 
+    dest: /root/certificate.sh 
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Executing certificate.sh
+  command: sh /root/certificate.sh
+

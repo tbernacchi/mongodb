@@ -1,0 +1,113 @@
+##Add mongo-repository
+- name: Add mongo-repository
+  yum_repository:
+    name: mongodb-org-3.6
+    description: MongoDB 3.6 Repository
+    file: mongodb-org-3.6
+    baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.6/x86_64/
+    gpgcheck: yes
+    enabled: yes
+    gpgkey: https://www.mongodb.org/static/pgp/server-3.6.asc
+
+##Update
+- name: Yum update
+  yum:
+    name: '*'
+    state: latest
+
+##Install mongodb-org
+- name: Install mongodb packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - mongodb-org
+    - mongodb-org-shell
+    - mongodb-org-tools
+    - mongodb-org-mongos
+    - mongodb-org-server
+
+##Changing owner /var/lib/mongo
+- name: Change ownership /var/lib/mongo 
+  file:
+    path: /var/lib/mongodb/
+    state: directory
+    recurse: yes
+    owner: mongod
+    group: root
+ 
+##Creating /etc/mongo/
+- name: Creating /etc/mongo/
+  file:
+    path: /etc/mongo/
+    state: directory
+    recurse: yes
+    owner: mongod
+    group: root
+ 
+##Creating /var/run/mongodb
+- name: Creating /var/run/mongodb
+  file:
+    path: /var/run/mongodb/
+    state: directory
+    recurse: yes
+    owner: mongod
+    group: root
+ 
+##Template mongod.conf
+- name: Template a file to /etc/mongo/mongod.conf
+  template:
+    src: ../templates/mongod.conf.j2
+    dest: /etc/mongo/mongod.conf
+    owner: root
+    group: root
+    mode: '0644'    
+
+##Remove /etc/mongod.conf
+- name: Remove /etc/mongod.conf
+  file:
+    path: /etc/mongod.conf
+    state: absent
+
+##Setting mongod.service
+- name: Setting mongod.service
+  lineinfile:
+    path: /usr/lib/systemd/system/mongod.service
+    regexp: '^Environment='
+    line: Environment="OPTIONS=-f /etc/mongo/mongod.conf"
+
+##Reload systemctl 
+- name: Reload mongod.service
+  systemd: 
+    name: mongod 
+    daemon_reload: yes 
+
+## Create key for mongo
+- name: Create and copying openssl script certificate.sh
+  copy:
+    content: "#!/bin/bash \n
+openssl rand -base64 741 > /etc/mongo/mongodb.key \n
+chmod 600 /etc/mongo/mongodb.key \n
+chown mongod:mongod /etc/mongo/mongodb.key \n" 
+    dest: /root/certificate.sh 
+    owner: root
+    group: root
+    mode: '0755'
+
+## Stat mondb.key
+- name: Check if mongodb.key exists
+  stat: 
+    path: /etc/mongo/mongodb.key
+  register: mongodb_key
+
+## Execute certificate.sh 
+- name: Executing certificate.sh
+  command: sh /root/certificate.sh
+  when: mongodb_key.stat.exists == False 
+
+##Enable start mongo
+- name: Enable and start mongod
+  systemd:
+    name: mongod
+    state: started
+    enabled: yes

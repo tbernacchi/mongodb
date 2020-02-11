@@ -1,0 +1,21 @@
+---
+# tasks file for mongo
+- name: "Mongo"
+  hosts: [all]
+  become: true
+  gather_facts: False
+  tasks:
+  - include: adjust.yml
+    tags: adjust
+  
+  - include: lvm.yml
+    tags: lvm
+
+  - include: mongo.yml
+    tags: mongo 
+  
+  - include: certificate.yml
+    tags: certificate
+  
+  - include: sync_key.yml
+    tags: sync_key

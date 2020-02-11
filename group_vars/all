@@ -1,0 +1,16 @@
+---
+# vars file for lvm
+new_disk: '/dev/sdb'                                    
+new_partition: '/dev/sdb1'                                    
+new_mntp: '/var/lib/mongodb'                              
+create_vgname: 'mongo'                               
+create_lvname: 'mongo01'                               
+create_lvsize: '100%FREE'                               
+filesystem: 'xfs' 
+
+#mongo
+db_path: '/var/lib/mongodb'
+engine: 'wiredTiger'
+log_path: '/var/log/mongodb/mongod.log'
+key_file: '/etc/mongo/mongodb.key'
+replSetName: 'mongo_lab'

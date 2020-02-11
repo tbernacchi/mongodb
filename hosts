@@ -1,0 +1,7 @@
+[master]
+mongo01 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant ansible_python_interpreter=/bin/python port=27017
+
+[slaves]
+mongo02 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant ansible_python_interpreter=/bin/python port=27018
+mongo03 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant ansible_python_interpreter=/bin/python port=27019
+

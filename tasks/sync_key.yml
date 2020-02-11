@@ -1,0 +1,17 @@
+- name: Fetch mongod.key 
+  fetch: 
+    src: /etc/mongo/mongod.key
+    dest: /tmp/teste.sh
+    flat: yes
+  delegate_to: mongo01 
+
+- name: Copy mongod.key 
+  copy:
+    src: /tmp/mongod.key
+    dest: /etc/mongo/mongod.key
+    owner: root
+    group: root
+    mode: '0600'
+  delegate_to: "{{ item }}"
+  loop: "{{ groups['slaves'] }}" 
+

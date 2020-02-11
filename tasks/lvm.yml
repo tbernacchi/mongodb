@@ -1,0 +1,38 @@
+- name: Create a new primary partition for LVM
+  parted:
+    device: "{{ new_disk }}"
+    number: 1
+    flags: [ lvm ]
+    state: present
+    part_start: 1GiB
+
+- name: volume group creation
+  lvg:
+    vg: "{{ create_vgname }}"
+    pvs: "{{ new_partition }}"
+
+- name: lvm creation
+  lvol:
+    vg: "{{ create_vgname }}"
+    lv: "{{ create_lvname }}"
+    size: "{{ create_lvsize }}"
+    force: yes
+
+- name: Create mongo directory
+  file:
+    path: "{{ new_mntp }}"
+    state: directory
+    mode: '0755'
+
+- name: Create a xfs filesystem on "{{ new_partition }}"
+  filesystem:
+    fstype: xfs 
+    dev: /dev/{{ create_vgname }}/{{ create_lvname }} 
+    force: yes
+
+- name: mount logical volume
+  mount:
+    name: "{{ new_mntp }}"
+    src: /dev/{{ create_vgname }}/{{ create_lvname }}
+    fstype: xfs
+    state: mounted 
