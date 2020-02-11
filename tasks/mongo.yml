@@ -94,7 +94,7 @@ chown mongod:mongod /etc/mongo/mongodb.key \n"
     group: root
     mode: '0755'
 
-## Stat mondb.key
+## Stat mongod.key
 - name: Check if mongodb.key exists
   stat: 
     path: /etc/mongo/mongodb.key
