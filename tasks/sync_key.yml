@@ -1,17 +1,23 @@
 - name: Fetch mongod.key 
   fetch: 
-    src: /etc/mongo/mongod.key
-    dest: /tmp/teste.sh
+    src: /etc/mongo/mongodb.key
+    dest: /tmp/mongodb.key
     flat: yes
   delegate_to: mongo01 
 
 - name: Copy mongod.key 
   copy:
-    src: /tmp/mongod.key
-    dest: /etc/mongo/mongod.key
-    owner: root
-    group: root
+    src: /tmp/mongodb.key
+    dest: /etc/mongo/mongodb.key
+    owner: mongod
+    group: mongod 
     mode: '0600'
   delegate_to: "{{ item }}"
   loop: "{{ groups['slaves'] }}" 
 
+##Enable start mongo
+- name: Enable and start mongod
+  systemd:
+    name: mongod
+    state: started
+    enabled: yes

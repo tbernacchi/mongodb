@@ -63,6 +63,15 @@
     group: root
     mode: '0644'    
 
+##Template mongod.service
+- name: Template a file to /usr/lib/systemd/system/mongod.service
+  template:
+    src: ../templates/mongod.service
+    dest: /usr/lib/systemd/system/mongod.service
+    owner: root
+    group: root
+    mode: '0644'    
+
 ##Remove /etc/mongod.conf
 - name: Remove /etc/mongod.conf
   file:
@@ -82,7 +91,7 @@
     name: mongod 
     daemon_reload: yes 
 
-## Create key for mongo
+##Create key for mongo
 - name: Create and copying openssl script certificate.sh
   copy:
     content: "#!/bin/bash \n
@@ -93,21 +102,17 @@ chown mongod:mongod /etc/mongo/mongodb.key \n"
     owner: root
     group: root
     mode: '0755'
+  delegate_to: mongo01
 
-## Stat mongod.key
+##Stat mongod.key
 - name: Check if mongodb.key exists
   stat: 
     path: /etc/mongo/mongodb.key
   register: mongodb_key
+  delegate_to: mongo01 
 
-## Execute certificate.sh 
+##Execute certificate.sh 
 - name: Executing certificate.sh
   command: sh /root/certificate.sh
   when: mongodb_key.stat.exists == False 
-
-##Enable start mongo
-- name: Enable and start mongod
-  systemd:
-    name: mongod
-    state: started
-    enabled: yes
+  delegate_to: mongo01 
