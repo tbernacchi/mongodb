@@ -7,7 +7,7 @@
 ![Ansible](/.github/assets/img/ansible-logo.png)
 
 <div align=>
-	<img align="right" width="200px" src=/.github/assets/img/mongodb-logo.png>
+	<img align="right" width="200px" src=/.github/assets/img/mongologo.png>
 </div> 
 
 ## Table of Contents
