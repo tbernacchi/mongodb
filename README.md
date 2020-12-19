@@ -1,38 +1,38 @@
-Role Name
-=========
+<h1 align="">MongoDB cluster👋</h1>
+<p>
+</p>
 
-A brief description of the role goes here.
+> A mongodb cluster using Ansible to deploy (I'm not sure if it work's anymore)
 
-Requirements
-------------
+![Ansible](/.github/assets/img/ansible-logo.png)
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+<div align=>
+	<img align="right" width="200px" src=/.github/assets/img/mongodb-logo.png>
+</div> 
 
-Role Variables
---------------
+## Table of Contents
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+* **Ansible**  
+  * [Official Website](https://www.ansible.com/)
+  * [Official Docs](https://docs.ansible.com/ansible/latest/)
+  * [Official Github](https://github.com/ansible/ansible)
+* **MongoDB**
+  * [Offical Website](https://www.mongodb.com/)
+  * [Offical Docs](https://docs.mongodb.com/guides/)
+  * [Official Github](https://github.com/mongodb/mongo)
 
-Dependencies
-------------
+## Author
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+👤 **Tadeu Bernacchi**
 
-Example Playbook
-----------------
+* Website: http://www.tadeubernacchi.com.br/
+* Twitter: [@tadeuuuuu](https://twitter.com/tadeuuuuu)
+* Github: [@tbernacchi](https://github.com/tbernacchi)
+* LinkedIn: [@tadeubernacchi](https://linkedin.com/in/tadeubernacchi)
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Show your support
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Give a ⭐️ if this project helped you!
 
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
